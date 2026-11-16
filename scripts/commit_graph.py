@@ -1,4 +1,4 @@
-"""Render a yearly commit heatmap for all public repositories of the organization.
+"""Render a monthly commit chart for all public repositories of the organization.
 
 Data source: GET /repos/{org}/{repo}/stats/commit_activity (daily counts for the
 last 52 weeks, default branch). Output: profile/assets/commit-activity.svg.
@@ -10,7 +10,6 @@ import os
 import sys
 import time
 import urllib.request
-from html import escape
 from pathlib import Path
 
 ORG = os.environ.get("ORG", "Manacost-Labs")
@@ -19,7 +18,6 @@ OUT = Path(__file__).resolve().parent.parent / "profile" / "assets" / "commit-ac
 SKIP = {".github"}
 
 MONTHS = ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"]
-LEVELS = ["#172126", "#124146", "#196a6d", "#2aa29f", "#6fe0d6"]
 
 
 def api(path):
@@ -71,22 +69,22 @@ def collect():
     return daily, per_repo
 
 
-def level(n, thresholds):
-    if n == 0:
-        return 0
-    return 1 + sum(n > t for t in thresholds)
+def plural(n, one, few, many):
+    if n % 10 == 1 and n % 100 != 11:
+        return one
+    if 2 <= n % 10 <= 4 and not 12 <= n % 100 <= 14:
+        return few
+    return many
 
 
 def render(daily, per_repo, today):
-    first = today - dt.timedelta(days=today.weekday() + 52 * 7)  # Monday, 53 columns
+    # Twelve calendar months ending with the current (partial) one.
+    end = today.year * 12 + today.month - 1
+    months = [divmod(i, 12) for i in range(end - 11, end + 1)]
+    first = dt.date(months[0][0], months[0][1] + 1, 1)
     days = [first + dt.timedelta(days=i) for i in range((today - first).days + 1)]
     counts = [daily.get(d, 0) for d in days]
-
-    nonzero = sorted(c for c in counts if c)
-    if nonzero:
-        thresholds = [nonzero[int(len(nonzero) * q)] for q in (0.25, 0.5, 0.75)]
-    else:
-        thresholds = [0, 0, 0]
+    values = [sum(c for d, c in zip(days, counts) if (d.year, d.month - 1) == m) for m in months]
 
     total = sum(counts)
     active = sum(1 for c in counts if c)
@@ -95,65 +93,50 @@ def render(daily, per_repo, today):
         streak = streak + 1 if c else 0
         best = max(best, streak)
 
-    x0, y0, step, cell = 92, 118, 16, 12
-    out = []
-    for i, (d, c) in enumerate(zip(days, counts)):
-        col, row = divmod(i, 7)
-        x, y = x0 + col * step, y0 + row * step
-        tip = f"{d.strftime('%d.%m.%Y')}: {c}"
-        out.append(f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" rx="3" fill="{LEVELS[level(c, thresholds)]}"><title>{tip}</title></rect>')
-
-    labels, last_month = [], None
-    for col in range(len(days) // 7 + 1):
-        d = first + dt.timedelta(days=col * 7)
-        nxt = first + dt.timedelta(days=(col + 3) * 7)
-        if d.month != last_month and col < 51 and not (col == 0 and nxt.month != d.month):
-            labels.append(f'<text x="{x0 + col * step}" y="{y0 - 12}">{MONTHS[d.month - 1]}</text>')
-        last_month = d.month
-    for row, name in ((0, "пн"), (2, "ср"), (4, "пт")):
-        labels.append(f'<text x="{x0 - 12}" y="{y0 + row * step + 10}" text-anchor="end">{name}</text>')
-
-    legend_x = x0 + 48
-    legend = [f'<text x="{x0}" y="{y0 + 7 * step + 25}">меньше</text>']
-    legend += [f'<rect x="{legend_x + i * step}" y="{y0 + 7 * step + 15}" width="{cell}" height="{cell}" rx="3" fill="{c}"/>' for i, c in enumerate(LEVELS)]
-    legend.append(f'<text x="{legend_x + 5 * step + 6}" y="{y0 + 7 * step + 25}">больше</text>')
-
-    top = sorted(per_repo.items(), key=lambda kv: -kv[1])[:4]
-    peak = top[0][1] if top else 1
-    bars = []
-    for i, (name, n) in enumerate(top):
-        y = 186 + i * 26
-        w = max(4, round(150 * n / peak))
-        bars.append(
-            f'<text x="990" y="{y}" fill="#c9d8da">{escape(name if len(name) <= 26 else name[:25] + '…')}</text>'
-            f'<text x="1232" y="{y}" text-anchor="end" fill="#8ba6ab">{n}</text>'
-            f'<rect x="990" y="{y + 6}" width="242" height="3" rx="1.5" fill="#1b2a30"/>'
-            f'<rect x="990" y="{y + 6}" width="{round(242 * w / 150)}" height="3" rx="1.5" fill="#2aa29f"/>'
-        )
-
-    stats = [(f"{total:,}".replace(",", " "), "коммитов"), (str(active), "активных дней"), (str(best), "дней подряд")]
+    stats = [
+        (f"{total:,}".replace(",", " "), plural(total, "коммит", "коммита", "коммитов")),
+        (str(active), plural(active, "активный день", "активных дня", "активных дней")),
+        (str(best), plural(best, "день подряд", "дня подряд", "дней подряд")),
+    ]
     stat_svg = "".join(
-        f'<text x="{990 + (0, 90, 172)[i]}" y="118" font-size="24" font-weight="700" fill="#f3f7f6">{v}</text>'
-        f'<text x="{990 + (0, 90, 172)[i]}" y="138" font-size="11" fill="#8ba6ab">{l}</text>'
-        for i, (v, l) in enumerate(stats)
+        f'<text x="{64 + i * 400}" y="196" font-size="72" font-weight="800" fill="#ffffff">{v}</text>'
+        f'<text x="{68 + i * 400}" y="238" font-size="28" fill="#c9dcdd">{label}</text>'
+        for i, (v, label) in enumerate(stats)
     )
 
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="300" viewBox="0 0 1280 300" role="img" aria-labelledby="t d">
+    base, top, step, width = 520, 300, 96, 68
+    peak = max(values) or 1
+    bars = []
+    for i, ((year, month), n) in enumerate(zip(months, values)):
+        x = 64 + i * step
+        h = round((base - top) * n / peak)
+        fill = "url(#barNow)" if i == 11 else "url(#bar)"
+        tip = f"{MONTHS[month]} {year}: {n}"
+        if n:
+            bars.append(f'<rect x="{x}" y="{base - h}" width="{width}" height="{h}" rx="10" fill="{fill}"{' stroke="#4fd8cc" stroke-width="2" stroke-dasharray="6 5"' if i == 11 else ''}><title>{tip}</title></rect>')
+            bars.append(f'<text x="{x + width / 2}" y="{base - h - 14}" text-anchor="middle" font-size="26" font-weight="700" fill="#ffffff">{n}</text>')
+        else:
+            bars.append(f'<rect x="{x}" y="{base - 4}" width="{width}" height="4" rx="2" fill="#24393d"><title>{tip}</title></rect>')
+        bars.append(f'<text x="{x + width / 2}" y="{base + 42}" text-anchor="middle" font-size="26" fill="#c9dcdd">{MONTHS[month]}</text>')
+
+    period = f"{MONTHS[months[0][1]]} {months[0][0]} — {MONTHS[months[-1][1]]} {months[-1][0]}"
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="620" viewBox="0 0 1280 620" role="img" aria-labelledby="t d">
 <title id="t">Активность Manacost Labs</title>
-<desc id="d">Коммиты во всех открытых репозиториях за 12 месяцев: {total}, активных дней: {active}.</desc>
-<defs><linearGradient id="bg" x2="1" y2=".6"><stop stop-color="#101719"/><stop offset="1" stop-color="#070b0e"/></linearGradient></defs>
-<rect width="1280" height="300" rx="22" fill="url(#bg)"/>
-<rect x=".5" y=".5" width="1279" height="299" rx="21.5" fill="none" stroke="#91d8ce" stroke-opacity=".18"/>
+<desc id="d">Коммиты во всех открытых репозиториях по месяцам, {period}: всего {total}, активных дней {active}.</desc>
+<defs>
+<linearGradient id="bg" x2="1" y2=".7"><stop stop-color="#0d1417"/><stop offset=".55" stop-color="#0a1013"/><stop offset="1" stop-color="#0c2326"/></linearGradient>
+<linearGradient id="bar" x2="0" y2="1"><stop stop-color="#4fd8cc"/><stop offset="1" stop-color="#1f8f8a"/></linearGradient>
+<linearGradient id="barNow" x2="0" y2="1"><stop stop-color="#4fd8cc" stop-opacity=".45"/><stop offset="1" stop-color="#1f8f8a" stop-opacity=".35"/></linearGradient>
+</defs>
+<rect width="1280" height="620" rx="28" fill="url(#bg)"/>
+<rect x="1" y="1" width="1278" height="618" rx="27" fill="none" stroke="#7fe0d6" stroke-opacity=".22" stroke-width="2"/>
 <g font-family="'Segoe UI', Inter, 'Helvetica Neue', Arial, sans-serif">
-<path d="M54 47H102" stroke="#65d9cb" stroke-width="3"/>
-<text x="116" y="53" font-size="14" letter-spacing="3" fill="#90b4b5" font-weight="600">АКТИВНОСТЬ КОМАНДЫ ЗА ГОД</text>
-<text x="1232" y="53" font-size="12" fill="#5f7a7e" text-anchor="end">коммиты в открытых репозиториях · обновлено {today.strftime('%d.%m.%Y')}</text>
-<g font-size="11" fill="#6f8a8e">{''.join(labels)}{''.join(legend)}</g>
-{''.join(out)}
-<line x1="964" y1="96" x2="964" y2="262" stroke="#91d8ce" stroke-opacity=".12"/>
+<text x="64" y="84" font-size="40" font-weight="800" fill="#ffffff">Активность команды</text>
+<text x="1216" y="82" text-anchor="end" font-size="26" fill="#5fe3d6">{period}</text>
 {stat_svg}
-<text x="990" y="166" font-size="11" letter-spacing="2" fill="#90b4b5" font-weight="600">ТОП РЕПОЗИТОРИЕВ</text>
-<g font-size="13">{''.join(bars)}</g>
+<line x1="64" y1="{base}" x2="1216" y2="{base}" stroke="#2c4549" stroke-width="2"/>
+{''.join(bars)}
+<text x="64" y="598" font-size="22" fill="#8fa9ac">Коммиты в открытых репозиториях · обновлено {today.strftime('%d.%m.%Y')}</text>
 </g>
 </svg>
 """
