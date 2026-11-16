@@ -1,81 +1,67 @@
 <p align="center">
-  <img src="./assets/manacost-labs-banner.svg" width="100%" alt="Manacost Labs — знания, данные и сообщество" />
+  <img src="./assets/manacost-labs-banner.svg" width="100%" alt="Manacost Labs — сайты, аналитика и инструменты для сообщества Hearthstone" />
 </p>
 
 <p align="center">
-  <strong>Помогаем русскоязычным игрокам Hearthstone понимать мету, находить сильные решения и получать больше удовольствия от игры.</strong>
+  <b>Инженерная команда Манакоста.</b><br />
+  С 2013 года делаем сайты, аналитику и инструменты для русскоязычных игроков Hearthstone.
 </p>
 
 <p align="center">
-  <a href="https://hs-manacost.ru/"><img src="https://img.shields.io/badge/HS--Manacost.ru-visit-2A77BF?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Открыть HS-Manacost.ru" /></a>
-  <a href="https://kolodahearthstone.ru/"><img src="https://img.shields.io/badge/KolodaHearthstone.ru-explore-D77017?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Открыть KolodaHearthstone.ru" /></a>
-  <a href="https://t.me/manacost_ru"><img src="https://img.shields.io/badge/Telegram-join-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram-канал Манакоста" /></a>
+  <a href="https://hs-manacost.ru/"><img src="https://img.shields.io/badge/hs--manacost.ru-1F8F99?style=flat-square&logo=googlechrome&logoColor=white" alt="hs-manacost.ru" /></a>
+  <a href="https://kolodahearthstone.com/"><img src="https://img.shields.io/badge/kolodahearthstone.com-1F8F99?style=flat-square&logo=googlechrome&logoColor=white" alt="kolodahearthstone.com" /></a>
+  <a href="https://hearthpulse.net/"><img src="https://img.shields.io/badge/hearthpulse.net-1F8F99?style=flat-square&logo=googlechrome&logoColor=white" alt="hearthpulse.net" /></a>
+  <a href="https://t.me/manacost_ru"><img src="https://img.shields.io/badge/Telegram-26A5E4?style=flat-square&logo=telegram&logoColor=white" alt="Telegram-канал" /></a>
+  <a href="https://boosty.to/kolodahearthstone"><img src="https://img.shields.io/badge/Boosty-F15F2C?style=flat-square&logo=boosty&logoColor=white" alt="Boosty" /></a>
 </p>
 
-## Мы — Манакост
-
-С 2013 года мы развиваем русскоязычное сообщество Hearthstone: следим за обновлениями, проверяем колоды, разбираем статистику, переводим сложную мету на понятный язык и создаём собственные инструменты для игроков.
-
-За каждым материалом стоит простая идея: **хорошая игровая информация должна не перегружать, а помогать принимать решения**. Поэтому рядом с новостями у нас живут подробные гайды, рядом с цифрами — редакционный разбор, а рядом с соревновательной метой — фановые идеи и материалы для новичков.
-
-## Два сайта — одна экосистема
+## Продукты
 
 <table>
   <tr>
-    <td width="50%" valign="top">
-      <h3><a href="https://hs-manacost.ru/">⚡ HS-Manacost.ru</a></h3>
-      <p><strong>Главная точка входа в мир Hearthstone.</strong></p>
-      <p>Новости и разборы обновлений, актуальные колоды, гайды по классам, материалы по Полям сражений, Арене и Вольному формату — всё, что помогает быстро войти в игру и оставаться в контексте.</p>
-      <p><a href="https://hs-manacost.ru/hearthstone-top-decks/">Лента топ-колод →</a></p>
+    <td width="33%" valign="top">
+      <h4><a href="https://hs-manacost.ru/">HS-Manacost</a></h4>
+      Новости и разборы патчей, актуальные колоды, гайды по Стандарту, Вольному, Арене и Полям сражений.
     </td>
-    <td width="50%" valign="top">
-      <h3><a href="https://kolodahearthstone.ru/">🏆 KolodaHearthstone.ru</a></h3>
-      <p><strong>Глубокая аналитика для тех, кто хочет понимать больше.</strong></p>
-      <p>Авторские гайды, мета-отчёты, тир-листы, статистика и подробные разборы стратегий. Здесь данные встречаются с опытом редакции и превращаются в практические выводы.</p>
-      <p><a href="https://kolodahearthstone.ru/category/besplatnyj-material/">Бесплатные материалы →</a></p>
+    <td width="33%" valign="top">
+      <h4><a href="https://kolodahearthstone.com/">KolodaHearthstone</a></h4>
+      Авторская аналитика: мета-отчёты, тир-листы и подробные гайды для тех, кто хочет понимать игру глубже.
+    </td>
+    <td width="33%" valign="top">
+      <h4><a href="https://hearthpulse.net/">HearthPulse</a></h4>
+      Статистика в цифрах: винрейты классов и тир-лист карт Арены, мета Полей сражений, Стандарта и Вольного.
     </td>
   </tr>
 </table>
 
-## Почему наша работа важна
+## Открытый код
 
-- **Сохраняем знания на русском языке.** Объясняем патчи, механики и тренды так, чтобы игроку не приходилось собирать картину по десяткам источников.
-- **Помогаем на любом уровне.** От первых бюджетных колод и игры без донатов до мета-отчётов, тонкой настройки сборок и пути к Легенде.
-- **Соединяем данные и живой опыт.** Винрейты и тир-листы становятся полезными только вместе с контекстом — его добавляют наши авторы и редакторы.
-- **Поддерживаем разные способы играть.** Стандарт, Вольный, Арена, Поля сражений, соревновательные и фановые колоды — в сообществе есть место каждому.
-- **Строим независимую инфраструктуру.** Сайты, лента колод, статистические сервисы, авторизация и Telegram-инструменты работают как единая полезная экосистема.
+| | Проект | Что делает | Стек |
+|---|---|---|---|
+| **Данные** | [HeartPulse](https://github.com/Manacost-Labs/HeartPulse) | Сайт аналитики HearthPulse: Арена, Поля сражений, мета и тир-листы | TypeScript · React · Node.js |
+| | [api.kolodahearthstone.com](https://github.com/Manacost-Labs/api.kolodahearthstone.com) | Платформа данных Hearthstone: REST/GraphQL API, парсеры, веб-панель | Python · FastAPI · PostgreSQL |
+| | [hearthstone-deckstrings](https://github.com/Manacost-Labs/hearthstone-deckstrings) | Кодеки кодов колод с общим проверенным контрактом | TypeScript · PHP · Python · .NET |
+| | [ParsesUnix](https://github.com/Manacost-Labs/ParsesUnix) | Фреймворк сбора данных из веба с контролем качества и затрат | Python |
+| **Контент** | [Deckview-TG](https://github.com/Manacost-Labs/Deckview-TG) | Telegram-бот и HTTP API для красивых изображений колод | Python · Pillow · Redis |
+| | [card-v2](https://github.com/Manacost-Labs/card-v2) | Изображения карт в высоком разрешении через Real-ESRGAN | Python |
+| | [extract-hs](https://github.com/Manacost-Labs/extract-hs) | Просмотр и выгрузка ресурсов клиента игры | TypeScript · Python |
+| | [motion-studio](https://github.com/Manacost-Labs/motion-studio) | Видеоролики из сцен, озвучки и данных | TypeScript · Remotion |
+| | [AICover](https://github.com/Manacost-Labs/AICover) | Генератор обложек на Gemini: слияние, апскейл, расширение кадра | TypeScript · React |
+| **Сервисы** | [AntiSpamBee](https://github.com/Manacost-Labs/AntiSpamBee) | Модерация спама в Telegram с ИИ-анализом и OCR | Go · PostgreSQL · NATS |
+| | [mcp](https://github.com/Manacost-Labs/mcp) | MCP-сервер только для чтения: сайты, база Koloda, аналитика | TypeScript |
+| **Инженерия** | [ManacostTeam](https://github.com/Manacost-Labs/ManacostTeam) | Монорепозиторий редакционных инструментов и навыков | Python |
+| | [devops-skill](https://github.com/Manacost-Labs/devops-skill) | DevOps-навыки с проверками, согласованием и откатом | Python |
+| | [Server](https://github.com/Manacost-Labs/Server) | Правила и навыки для ИИ-агентов на сервере команды | Python |
+| **Сайты** | [hs-manacost.ru](https://github.com/Manacost-Labs/hs-manacost.ru) · [kolodahearthstone.com](https://github.com/Manacost-Labs/kolodahearthstone.com) | Код и конфигурация WordPress-сайтов | PHP · WordPress |
 
-<p align="center">
-  <strong>Новичок</strong> &nbsp;→&nbsp; актуальная колода &nbsp;→&nbsp; понимание меты &nbsp;→&nbsp; осознанные решения &nbsp;→&nbsp; <strong>своё место в сообществе</strong>
-</p>
+## Сообщество
 
-## Наши проекты и площадки
-
-| Проект | Что внутри |
-|---|---|
-| [hs-manacost.ru](https://hs-manacost.ru/) | Новости, колоды, гайды и материалы по всем основным режимам |
-| [kolodahearthstone.ru](https://kolodahearthstone.ru/) | Авторская аналитика, мета-отчёты, тир-листы и углублённые гайды |
-| [HS-Arena](https://arena.hs-manacost.ru/) | Винрейты классов, тир-лист карт и статистика Арены |
-| [Telegram-канал](https://t.me/manacost_ru) | Свежие материалы и главные события проекта |
-| [Чат сообщества](https://t.me/manacostchat) | Обсуждение игры, колод и новых идей |
-| [Boosty](https://boosty.to/kolodahearthstone) | Подписка, которая помогает редакции создавать больше материалов и развивать сервисы |
-
-## Что мы создаём на GitHub
-
-Manacost Labs — это инженерная сторона нашей экосистемы. Здесь живут и развиваются плагины, сервисы, интеграции и инструменты, благодаря которым материалы быстрее доходят до читателей, а игровые данные становятся удобнее и понятнее.
-
-Мы верим, что сильное сообщество строится не только вокруг контента, но и вокруг технологий, которые делают этот контент доступным.
-
-<p align="center">
-  <a href="https://hs-manacost.ru/"><strong>Читайте Манакост</strong></a>
-  &nbsp;•&nbsp;
-  <a href="https://kolodahearthstone.ru/"><strong>Изучайте мету глубже</strong></a>
-  &nbsp;•&nbsp;
-  <a href="https://t.me/manacostchat"><strong>Присоединяйтесь к сообществу</strong></a>
-</p>
+[Telegram-канал](https://t.me/manacost_ru) — свежие материалы и новости проекта ·
+[Чат](https://t.me/manacostchat) — обсуждение колод и меты ·
+[Boosty](https://boosty.to/kolodahearthstone) — поддержать редакцию и развитие сервисов
 
 ---
 
 <p align="center">
-  <sub>Manacost Labs — независимый фанатский проект. Hearthstone® является товарным знаком Blizzard Entertainment, Inc.</sub>
+  <sub>Manacost Labs — независимый фанатский проект. Hearthstone® — товарный знак Blizzard Entertainment, Inc.</sub>
 </p>
