@@ -36,6 +36,10 @@
 
 ## Открытый код
 
+<p align="center">
+  <img src="./assets/commit-activity.svg" width="100%" alt="Активность команды: коммиты во всех открытых репозиториях за год" />
+</p>
+
 | | Проект | Что делает | Стек |
 |---|---|---|---|
 | **Данные** | [HeartPulse](https://github.com/Manacost-Labs/HeartPulse) | Сайт аналитики HearthPulse: Арена, Поля сражений, мета и тир-листы | TypeScript · React · Node.js |
